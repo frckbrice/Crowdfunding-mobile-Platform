@@ -4,7 +4,7 @@ A modern **React Native (Expo)** mobile application for crowdfunding: creators p
 
 ### App preview (live screens)
 
-| 2 | 3 | 4 | 5 | 6 | 7 |
+| 1 | 2 | 3 | 4 | 5 | 6 |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | ![Screenshot 2](assets/images/readme-images/img_2.jpeg) | ![Screenshot 3](assets/images/readme-images/img_3.jpeg) | ![Screenshot 4](assets/images/readme-images/img_4.jpeg) | ![Screenshot 5](assets/images/readme-images/img_5.jpeg) | ![Screenshot 6](assets/images/readme-images/img_6.jpeg) | ![Screenshot 7](assets/images/readme-images/img_7.jpeg) |
 

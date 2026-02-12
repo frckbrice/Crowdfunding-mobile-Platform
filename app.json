@@ -1,0 +1,110 @@
+{
+  "expo": {
+    "scheme": "unrichcom",
+    "name": "1riche1pauvre",
+    "slug": "1rich1pauvre",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/ios-light.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "platforms": ["ios", "android"],
+    "jsEngine": "hermes",
+    "ios": {
+      "supportsTablet": true,
+      "buildNumber": "1.0.0",
+      "requireFullScreen": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app requires access to the camera to upload photos.",
+        "NSPhotoLibraryUsageDescription": "This app needs access to your photo library for image uploads.",
+        "NSLocationWhenInUseUsageDescription": "Allow the app to use your location.",
+        "NSMicrophoneUsageDescription": "This app needs access to microphone for audio features.",
+        "UIRequiresFullScreen": true,
+        "LSApplicationQueriesSchemes": ["mailto", "tel"],
+        "CFBundleAllowMixedLocalizations": true,
+        "MinimumOSVersion": "11.0",
+        "UIRequiredDeviceCapabilities": ["armv7"],
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true,
+          "NSExceptionDomains": {
+            "unrichunpauvre-rest-api.onrender.com": {
+              "NSExceptionAllowsInsecureHTTPLoads": false,
+              "NSIncludesSubdomains": true
+            }
+          }
+        },
+        "UIBackgroundModes": ["fetch", "remote-notification"],
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.unricheunpauvre"
+    },
+    "android": {
+      "versionCode": 1,
+      "softwareKeyboardLayoutMode": "pan",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": {
+            "scheme": "unrichcom",
+            "host": "reset-password"
+          },
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.unricheunpauvre"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "server"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-asset",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#ffffff",
+          "image": "./assets/images/splash.png",
+          "imageWidth": 200,
+          "resizeMode": "contain"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app needs access to your photos to upload identification documents.",
+          "cameraPermission": "The app needs access to your camera to take photos."
+        }
+      ],
+      "expo-file-system"
+    ],
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/37bcd1b9-c4ee-47d5-9791-bb0ce7c482e0"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "37bcd1b9-c4ee-47d5-9791-bb0ce7c482e0"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
+  }
+}

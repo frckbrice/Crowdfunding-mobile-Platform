@@ -1,0 +1,6 @@
+# CodeRabbit: install the GitHub App at https://github.com/apps/coderabbit
+language: "en-US"
+reviews:
+  profile: "chill"
+  auto_review:
+    enabled: true

@@ -1,17 +1,16 @@
 import { useFonts } from 'expo-font';
-import { Stack, useRouter, useSegments } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
-import SplashScreenComponent from '@/components/splash-screen';
 import useUserGlobal from '@/hooks/use-user-hook';
-
 import * as SecureStore from 'expo-secure-store';
-
 import { StatusBar } from 'expo-status-bar';
 import { QueryClientProvider } from '@tanstack/react-query';
+
+import { ErrorBoundary } from '@/components/error-boundary';
 import { queryClient } from '@/lib/react-query-client';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -27,13 +26,6 @@ export function Layout() {
   const router = useRouter();
   const { currentUser } = useUserGlobal();
 
-
-  // Handle incoming deep links
-  useEffect(() => {
-    (
-      async () => new Promise((resolve) => setTimeout(resolve, 5000))
-    )()
-  }, []);
 
   useEffect(() => {
     if (error) throw error;
@@ -51,7 +43,6 @@ export function Layout() {
       if (!isLoading) {
         const token =
           await SecureStore.getItemAsync('currentUser');
-        console.log(`\n\n from layout, token: ${token} \n\n`);
         if (token)
           router.replace('/(tabulate)/accueil');
       }
@@ -63,9 +54,8 @@ export function Layout() {
   // }
 
   return (
-    <>
-      {/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
-      <Stack >
+    <ErrorBoundary>
+      <Stack>
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(settings)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabulate)" options={{ headerShown: false }} />
@@ -115,16 +105,15 @@ export function Layout() {
         <Stack.Screen name="reset-password" options={{ headerTitle: 'Re-initialiser le mot de passe' }} />
 
       </Stack>
-      <StatusBar style="light" animated networkActivityIndicatorVisible backgroundColor='#000' />
-    </>
+      <StatusBar style="light" animated networkActivityIndicatorVisible backgroundColor="#000" />
+    </ErrorBoundary>
   );
 }
 
 export default function RootLayout() {
-
   return (
     <QueryClientProvider client={queryClient}>
       <Layout />
     </QueryClientProvider>
-  )
+  );
 }

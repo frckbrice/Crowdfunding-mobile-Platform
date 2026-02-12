@@ -2,6 +2,12 @@
 
 A modern **React Native (Expo)** mobile application for crowdfunding: creators post projects and seek funding; backers discover projects and contribute via donations (including PayPal).
 
+### App preview (live screens)
+
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| ![Screenshot 1](assets/images/readme-images/img_1.jpg.jpeg) | ![Screenshot 2](assets/images/readme-images/img_2.jpeg) | ![Screenshot 3](assets/images/readme-images/img_3.jpeg) | ![Screenshot 4](assets/images/readme-images/img_4.jpeg) | ![Screenshot 5](assets/images/readme-images/img_5.jpeg) | ![Screenshot 6](assets/images/readme-images/img_6.jpeg) | ![Screenshot 7](assets/images/readme-images/img_7.jpeg) |
+
 ---
 
 ## Features
@@ -189,5 +195,4 @@ See `eas.json` for profile definitions and env mapping.
 ---
 
 ## License
-
-See repository license file.
+MIT

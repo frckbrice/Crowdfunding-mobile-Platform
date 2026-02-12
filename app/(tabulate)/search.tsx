@@ -152,7 +152,6 @@ import React, { useState, useCallback, useRef } from 'react';
 import {
     View,
     FlatList,
-    SafeAreaView,
     Text,
     TouchableOpacity,
     Animated,
@@ -160,6 +159,7 @@ import {
     KeyboardAvoidingView,
     StatusBar
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Post } from '@/lib/types';
 import useApiOps from '@/hooks/use-api';
 import { getAllCategories } from '@/lib/api';

@@ -6,7 +6,7 @@ import { AppError } from '@/utils/error-class';
 // import { tokenCache } from '@/store/persist-token-cache';
 import axios from 'axios';
 import { Comment, Jaime, Post, User } from '@/lib/types';
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 // appWrite config
 
 import {

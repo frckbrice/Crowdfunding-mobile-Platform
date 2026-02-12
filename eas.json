@@ -4,9 +4,31 @@
     "appVersionSource": "remote"
   },
   "build": {
+    "base": {
+      "node": "20",
+      "env": {
+        "EXPO_PUBLIC_PROD_API_URL": "${PROD_API_URL}",
+        "EXPO_PUBLIC_PAYPAL_CLIENT_ID": "${PAYPAL_CLIENT_ID}",
+        "EXPO_PUBLIC_PAYPAL_SECRET": "${PAYPAL_SECRET}",
+        "EXPO_PUBLIC_PAYPAL_DONATION_BUTTON_ID": "${PAYPAL_DONATION_BUTTON_ID}",
+        "EXPO_PUBLIC_JWT_SECRET_KEY": "${JWT_SECRET_KEY}",
+        "EXPO_PUBLIC_APPWRITE_PLATFORM": "${APPWRITE_PLATFORM}",
+        "EXPO_PUBLIC_APPWRITE_PROJECT_ID": "${APPWRITE_PROJECT_ID}",
+        "EXPO_PUBLIC_APPWRITE_DATABASE_ID": "${APPWRITE_DATABASE_ID}",
+        "EXPO_PUBLIC_APPWRITE_COLLECTION_ID": "${APPWRITE_COLLECTION_ID}",
+        "EXPO_PUBLIC_APPWRITE_STORAGE_ID": "${APPWRITE_STORAGE_ID}"
+      },
+      "ios": {
+        "resourceClass": "m1-medium",
+        "buildConfiguration": "Release",
+        "image": "latest"
+      }
+    },
     "development": {
+      "extends": "base",
       "developmentClient": true,
       "distribution": "internal",
+      "channel": "development",
       "android": {
         "gradleCommand": ":app:assembleDebug"
       },
@@ -15,53 +37,36 @@
       }
     },
     "preview": {
+      "extends": "base",
       "distribution": "internal",
-      "ios": {
-        "resourceClass": "m1-medium",
-        "buildConfiguration": "Release",
-        "cocoapods": "1.11.2" // Changed to string version
-      },
-      "env": {
-        "EXPO_PUBLIC_PROD_API_URL": "${PROD_API_URL}",
-        "EXPO_PUBLIC_PAYPAL_CLIENT_ID": "${PAYPAL_CLIENT_ID}",
-        "EXPO_PUBLIC_PAYPAL_SECRET": "${PAYPAL_SECRET}",
-        "EXPO_PUBLIC_PAYPAL_DONATION_BUTTON_ID": "${PAYPAL_DONATION_BUTTON_ID}",
-        "EXPO_PUBLIC_JWT_SECRET_KEY": "${JWT_SECRET_KEY}",
-        "EXPO_PUBLIC_APPWRITE_PLATFORM": "${APPWRITE_PLATFORM}",
-        "EXPO_PUBLIC_APPWRITE_PROJECT_ID": "${APPWRITE_PROJECT_ID}",
-        "EXPO_PUBLIC_APPWRITE_DATABASE_ID": "${APPWRITE_DATABASE_ID}",
-        "EXPO_PUBLIC_APPWRITE_COLLECTION_ID": "${APPWRITE_COLLECTION_ID}",
-        "EXPO_PUBLIC_APPWRITE_STORAGE_ID": "${APPWRITE_STORAGE_ID}"
+      "channel": "preview",
+      "android": {
+        "buildType": "apk"
       }
     },
     "production": {
+      "extends": "base",
       "autoIncrement": true,
-      "ios": {
-        "resourceClass": "m1-medium",
-        "buildConfiguration": "Release",
-        "cocoapods": "1.11.2", // Changed to string version
-        "image": "latest"
-      },
-      "env": {
-        "EXPO_PUBLIC_PROD_API_URL": "${PROD_API_URL}",
-        "EXPO_PUBLIC_PAYPAL_CLIENT_ID": "${PAYPAL_CLIENT_ID}",
-        "EXPO_PUBLIC_PAYPAL_SECRET": "${PAYPAL_SECRET}",
-        "EXPO_PUBLIC_PAYPAL_DONATION_BUTTON_ID": "${PAYPAL_DONATION_BUTTON_ID}",
-        "EXPO_PUBLIC_JWT_SECRET_KEY": "${JWT_SECRET_KEY}",
-        "EXPO_PUBLIC_APPWRITE_PLATFORM": "${APPWRITE_PLATFORM}",
-        "EXPO_PUBLIC_APPWRITE_PROJECT_ID": "${APPWRITE_PROJECT_ID}",
-        "EXPO_PUBLIC_APPWRITE_DATABASE_ID": "${APPWRITE_DATABASE_ID}",
-        "EXPO_PUBLIC_APPWRITE_COLLECTION_ID": "${APPWRITE_COLLECTION_ID}",
-        "EXPO_PUBLIC_APPWRITE_STORAGE_ID": "${APPWRITE_STORAGE_ID}"
-      }
+      "channel": "production"
     }
   },
   "submit": {
+    "preview": {
+      "ios": {
+        "appleId": "$APPLE_ID",
+        "ascAppId": "$ASCAPP_ID",
+        "appleTeamId": "$APPLE_TEAM_ID"
+      }
+    },
     "production": {
       "ios": {
         "appleId": "$APPLE_ID",
         "ascAppId": "$ASCAPP_ID",
         "appleTeamId": "$APPLE_TEAM_ID"
+      },
+      "android": {
+        "serviceAccountKeyPath": "$GOOGLE_SERVICES_JSON",
+        "track": "internal"
       }
     }
   }

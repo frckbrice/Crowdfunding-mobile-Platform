@@ -25,8 +25,9 @@ A modern **React Native (Expo)** mobile application for crowdfunding: creators p
 
 | Area | Technology |
 |------|------------|
-| Framework | [Expo](https://expo.dev) (SDK 51) |
-| Runtime | React 18, React Native 0.74 |
+| Framework | [Expo](https://expo.dev) (SDK 54) |
+| Runtime | React 19, React Native 0.81 |
+| Build & Deploy | [EAS Build](https://docs.expo.dev/build/introduction/), [EAS Submit](https://docs.expo.dev/submit/introduction/), [EAS Update](https://docs.expo.dev/eas-update/introduction/) |
 | Language | TypeScript (strict) |
 | Navigation | [Expo Router](https://docs.expo.dev/router/introduction/) (file-based) |
 | Data & API | [TanStack Query (React Query)](https://tanstack.com/query/latest), Axios, Appwrite (optional backend) |
@@ -120,7 +121,7 @@ Create a `.env` in the project root (see `.env.example`). Expo exposes variables
 - `EXPO_PUBLIC_APPWRITE_COLLECTION_ID`  
 - `EXPO_PUBLIC_APPWRITE_STORAGE_ID`
 
-Do not commit `.env`; use EAS Secrets or your CI env for production.
+Do not commit `.env`; use EAS Secrets or your CI env for production. Code review is handled by [CodeRabbit](https://github.com/apps/coderabbit) (see `.coderabbit.yaml`).
 
 ### 3. Run the app
 
@@ -159,19 +160,51 @@ yarn web
 | `yarn ios` | Run on iOS simulator/device |
 | `yarn android` | Run on Android emulator/device |
 | `yarn web` | Run in web browser |
+| `yarn lint` | Run ESLint |
+| `yarn lint:fix` | Run ESLint with auto-fix |
+| `yarn format` | Format code with Prettier |
+| `yarn format:check` | Check formatting |
+| `yarn eas:build:dev` | EAS build (development profile) |
+| `yarn eas:build:preview` | EAS build (preview / internal) |
+| `yarn eas:build:prod` | EAS build (production) |
+| `yarn eas:update` | Publish OTA update (EAS Update) |
+| `yarn eas:submit` | Submit latest build to stores |
 
 ---
 
-## Building for production (EAS)
+## EAS Build, Submit & OTA Updates
 
-1. Install EAS CLI: `npm i -g eas-cli`
-2. Log in: `eas login`
-3. Configure env in EAS (Dashboard or `eas.json` env) for preview/production
-4. Build:
-   - **Preview (internal):** `eas build --profile preview --platform all`
-   - **Production:** `eas build --profile production --platform all`
+The project uses **EAS (Expo Application Services)** with best-practice profiles and **EAS Workflows** for automation.
 
-See `eas.json` for profile definitions and env mapping.
+### Build profiles (`eas.json`)
+
+| Profile | Use case | Channel |
+|--------|----------|--------|
+| `development` | Dev client, simulator/internal | `development` |
+| `preview` | Internal testing (APK/IPA) | `preview` |
+| `production` | App Store / Play Store | `production` |
+
+- **Channels** link builds to EAS Update branches so OTA updates target the right installs.
+- Set **EAS Secrets** in the [Expo dashboard](https://expo.dev) (or `eas secret:create`) for `PROD_API_URL`, `PAYPAL_*`, `JWT_SECRET_KEY`, `APPWRITE_*`, and store credentials (`APPLE_ID`, `ASCAPP_ID`, `APPLE_TEAM_ID` for iOS; service account for Android).
+
+### EAS Workflows (`.eas/workflows/`)
+
+| Workflow | Trigger | Description |
+|----------|--------|-------------|
+| `build-production.yml` | Push to `main` | Build iOS + Android production |
+| `build-preview.yml` | Push to `develop` / `preview` | Build preview for internal testing |
+| `publish-update.yml` | Push to any branch | Publish OTA update to that branch’s channel |
+
+Submit to stores manually when ready: `yarn eas:submit` or from the [Expo dashboard](https://expo.dev). Link your GitHub repo in Expo project settings so workflows run on push.
+
+### Quick commands
+
+```bash
+npm i -g eas-cli && eas login
+yarn eas:build:preview   # or eas:build:prod
+yarn eas:update          # OTA update
+yarn eas:submit          # Submit latest build to stores
+```
 
 ---
 

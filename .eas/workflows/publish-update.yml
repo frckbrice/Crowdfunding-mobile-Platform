@@ -1,0 +1,11 @@
+name: Publish OTA update
+on:
+  push:
+    branches: ["*"]
+jobs:
+  update:
+    name: Publish update
+    type: update
+    params:
+      branch: ${{ github.ref_name || 'main' }}
+      message: "Update from ${{ github.ref_name }}"

@@ -16,7 +16,6 @@ export const PAYPAL_DONATION_BUTTON_ID = process.env.EXPO_PUBLIC_PAYPAL_DONNATIO
 export const PAYPAL_CLIENT_ID = process.env.EXPO_PUBLIC_PAYPAL_CLIENT_ID
 export const PAYPAL_SECRET = process.env.EXPO_PUBLIC_PAYPAL_SECRET;
 
-console.log({ PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_DONATION_BUTTON_ID })
 export const platform = process.env.EXPO_PUBLIC_APPWRITE_PLATFORM;
 export const projectId = process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID;
 export const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID;

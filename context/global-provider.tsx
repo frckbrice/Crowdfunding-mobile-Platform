@@ -6,14 +6,24 @@ import React,
 import { getCurrentUser } from "@/lib/api";
 import { Models } from "react-native-appwrite";
 
-export const GlobalContext = createContext({});
+export const GlobalContext = createContext<{
+    user: Models.Document | undefined | null;
+    isLoggedIn: boolean;
+    isLoading?: boolean;
+}>(defaultValue);
 export const useGlobalContext = () => useContext(GlobalContext);
+
+const defaultValue = {
+    user: null as Models.Document | undefined | null,
+    isLoggedIn: false,
+    isLoading: true,
+};
 
 const GlobalAppWriteProvider = ({ children }: { children: React.ReactNode }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState<Models.Document | undefined | null>(null);
     const [isLoading, setLoading] = useState(true);
-    // userID: frckbrice484065 pwd: +frckbrice@065484
+
     useEffect(() => {
         getCurrentUser()
             .then((res) => {
@@ -25,15 +35,21 @@ const GlobalAppWriteProvider = ({ children }: { children: React.ReactNode }) => 
                     setUser(null);
                 }
             })
-            .catch((error: any) => {
-                console.log(error);
+            .catch(() => {
+                setIsLoggedIn(false);
+                setUser(null);
             })
             .finally(() => {
                 setLoading(false);
             });
     }, []);
 
-    return { user, isLoggedIn }
+    const value = { user, isLoggedIn, isLoading };
+    return (
+        <GlobalContext.Provider value={value}>
+            {children}
+        </GlobalContext.Provider>
+    );
 };
 
 export default GlobalAppWriteProvider;

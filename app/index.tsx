@@ -1,6 +1,7 @@
 
 
-import React, { useEffect, useState } from 'react';
+const React = require('react');
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import OnboardingScreen from './(auth)/onboarding';
@@ -21,33 +22,28 @@ const IndexPage = () => {
     useEffect(() => {
         const checkAuthAndOnboarding = async () => {
             try {
-
-                // Check if user is authenticated
                 const userToken = await SecureStore.getItemAsync('currentUser');
-
-                // Wait to make sure all async operations are complete before deciding navigation
                 if (userToken) {
-                    // User is authenticated, go straight to accueil
-                    console.log("User is authenticated, redirecting to home");
                     router.replace('/(tabulate)/accueil');
+                } else {
+                    setAppState('onboarding');
                 }
-            } catch (error) {
-                console.error('Error checking auth state:', error);
-                // In case of error, default to onboarding
+            } catch {
                 setAppState('onboarding');
             }
         };
 
         checkAuthAndOnboarding();
-    }, []);
+    }, [router]);
 
-
-    // Show loading screen while checking the state
     if (appState === 'loading') {
         return <LoadingScreen />;
     }
 
-    // This will be reached if router.replace was called but hasn't completed yet
+    if (appState === 'onboarding') {
+        return <OnboardingScreen />;
+    }
+
     return <LoadingScreen />;
 };
 
